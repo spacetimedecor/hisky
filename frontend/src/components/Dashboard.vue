@@ -1,5 +1,7 @@
 <template>
-$END$
+  <div id="Dashboard">
+    dash!
+  </div>
 </template>
 
 <script>
@@ -8,6 +10,11 @@ name: "Dashboard"
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
+  @import "../assets/variables";
+
+  #Dashboard {
+    background-color: $base-color;
+  }
 </style>

@@ -1,5 +1,7 @@
 <template>
-$END$
+  <div id="Register">
+    Register
+  </div>
 </template>
 
 <script>

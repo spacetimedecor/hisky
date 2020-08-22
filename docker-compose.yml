@@ -2,9 +2,14 @@ version: '3'
 
 services:
   db:
-    image: postgres#may need to be something else
+    image: postgres
     ports:
       - "5432:5432"
+    environment:
+        POSTGRES_DB: "db"
+#        POSTGRES_USER: "admin"
+#        POSTGRES_PASSWORD: "hisky"
+        POSTGRES_HOST_AUTH_METHOD: "trust"#This is insecure, and really ought to be secure, ya dummy
   django:
     build: ./backend
     volumes:
