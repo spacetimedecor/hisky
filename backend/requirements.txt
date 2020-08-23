@@ -1,3 +1,5 @@
 psycopg2~=2.8.5
 Django~=3.1
-django-graphql-auth~=0.3.11
+graphene_django~=2.13
+django-graphql-jwt~=0.3
+graphene~=2.1.8
