@@ -1,36 +1,40 @@
 <template>
-  <div>
-    <h4 class='mv3'>{{login ? 'Login' : 'Sign Up'}}</h4>
-    <div class='flex flex-column'>
-      <input
-        v-show="!login"
-        v-model="name"
-        type="text"
-        placeholder="Your name">
-      <input
-        v-model="email"
-        type="text"
-        placeholder="Your email address">
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Password">
-    </div>
-    <div class='flex mt3'>
-      <button
-        type="button"
-        class='pointer mr2 button'
-        @click="confirm()">
-        {{login ? 'login' : 'create account'}}
-      </button>
-      <button
-        type="button"
-        class='pointer button'
-        @click="login = !login">
-        {{login ? 'need to create an account?' : 'already have an account?'}}
-      </button>
-    </div>
-  </div>
+  <b-row class="vh-100" align-h="center" align-v="center">
+    <b-col class="h-50" md="6" style="transform: translateY(-6rem)">
+      <h2 class="text-center" style="transform: translateY(-1rem)">Login</h2>
+      <b-form @submit="onSubmit">
+
+        <b-form-group
+            id="input-group-1"
+            label="Username:"
+            label-for="input-1"
+        >
+          <b-form-input
+              id="input-1"
+              v-model="form.username"
+              required
+              placeholder="Enter username"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+            id="input-group-4"
+            label="Your password:"
+            label-for="input-4"
+        >
+          <b-form-input
+              id="input-4"
+              v-model="form.password1"
+              type="password"
+              required
+              placeholder="Enter password"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" variant="success">Submit</b-button>
+      </b-form>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -38,27 +42,24 @@
 
   export default {
     name: 'Login',
-    data () {
-      return {
-        email: '',
-        login: true,
-        name: '',
-        password: ''
-      }
-    },
-    mounted(){
-
-    },
     methods: {
-
-      confirm () {
-        // ... you'll implement this in a bit
+      onSubmit(evt) {
+        evt.preventDefault()
+        alert(JSON.stringify(this.form))
       },
       saveUserData (id, token) {
 
         localStorage.setItem(USER_ID, id)
         localStorage.setItem(AUTH_TOKEN, token)
         this.$root.$data.userId = localStorage.getItem(USER_ID)
+      }
+    },
+    data() {
+      return {
+        form: {
+          username: '',
+          password: ''
+        }
       }
     }
   }
