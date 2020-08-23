@@ -5,6 +5,7 @@
   "scripts": {
     "start": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
+    "localServe": "http-server ./dist -c-1",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
