@@ -5,13 +5,9 @@ schema {
     mutation: Mutation
 }
 
-type CreateUser {
-    user: UserType
-}
-
 type Mutation {
-    createUser(email: String!, firstname: String, lastname: String, password: String!, username: String!): CreateUser
     refreshToken(token: String): Refresh
+    register(email: String!, firstname: String, lastname: String, password: String!, username: String!): Register
     "Obtain JSON Web Token mutation"
     tokenAuth(password: String!, username: String!): ObtainJSONWebToken
     verifyToken(token: String): Verify
@@ -33,6 +29,10 @@ type Refresh {
     payload: GenericScalar!
     refreshExpiresIn: Int!
     token: String!
+}
+
+type Register {
+    message: String
 }
 
 type UserType {

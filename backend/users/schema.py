@@ -4,13 +4,15 @@ from graphene_django import DjangoObjectType
 # from users.models import UserModel
 import graphql_jwt
 
+
 class UserType(DjangoObjectType):
     class Meta:
         model = get_user_model()
 
 
-class CreateUser(graphene.Mutation):
-    user = graphene.Field(UserType)
+class Register(graphene.Mutation):
+
+    message = graphene.String()
 
     class Arguments:
         firstname = graphene.String()
@@ -19,21 +21,26 @@ class CreateUser(graphene.Mutation):
         email = graphene.String(required=True)
         password = graphene.String(required=True)
 
-    def mutate(self, info, firstname, lastname, username, password, email):
-        user = get_user_model()(
-            first_name=firstname,
-            last_name=lastname,
-            username=username,
-            email=email
-        )
-        user.set_password(password)
-        user.save()
+    @classmethod
+    def mutate(cls, info, firstname, lastname, username, password, email):
 
-        return CreateUser(user=user)
+        try:
+            user = get_user_model()(
+                first_name=firstname,
+                last_name=lastname,
+                username=username,
+                email=email
+            )
+            user.set_password(password)
+            user.save()
+            return Register(message="Thanks for signing up!")
+
+        except Exception:
+            return Register(message="Something went wrong :/")
 
 
 class Mutation(graphene.ObjectType):
-    create_user = CreateUser.Field()
+    register = Register.Field()
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()

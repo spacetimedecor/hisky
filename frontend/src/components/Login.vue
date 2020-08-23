@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import { GC_USER_ID, GC_AUTH_TOKEN } from '@/settings'
+  import { USER_ID, AUTH_TOKEN } from '@/settings'
 
   export default {
     name: 'Login',
@@ -56,11 +56,9 @@
       },
       saveUserData (id, token) {
 
-
-
-        localStorage.setItem(GC_USER_ID, id)
-        localStorage.setItem(GC_AUTH_TOKEN, token)
-        this.$root.$data.userId = localStorage.getItem(GC_USER_ID)
+        localStorage.setItem(USER_ID, id)
+        localStorage.setItem(AUTH_TOKEN, token)
+        this.$root.$data.userId = localStorage.getItem(USER_ID)
       }
     }
   }

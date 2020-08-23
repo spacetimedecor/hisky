@@ -1,14 +1,19 @@
 <template>
   <div id="app">
-    <router-view/>
+    <Header/>
+      <b-container fluid class="h-100">
+      <router-view/>
+    </b-container>
   </div>
 </template>
 
 <script>
+  import Header from '@/components/Header'
+
   export default {
     name: 'app',
     components: {
-
+      Header
     },
     mounted() {
       console.log(this);
@@ -17,9 +22,9 @@
 </script>
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Verdana, Geneva, sans-serif;
+  html, body, #app {
+    height: 100%;
+    overflow: hidden;
   }
+
 </style>

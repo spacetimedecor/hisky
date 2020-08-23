@@ -11,6 +11,14 @@ export default (queryType, args) => {
                     }
                 }
             `
+        case "register":
+            return gql`                
+                mutation {
+                    register (email: ${args.email}, password: ${args.password}, username: ${args.username}, firstname: ${args.firstname}, lastname: ${args.lastname}) {
+                        message
+                    }
+                }
+            `
     }
 
 
