@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import queryFactory from "@/queryFactory";
+
 export default {
 name: "User",
   data(){
@@ -20,8 +22,29 @@ name: "User",
     }
   },
   mounted(){
-    // Now we query me
 
+    this.$apollo.query({
+      query: queryFactory("me")
+    })
+    .then((response)=>{
+
+      console.log(response)
+
+      this.$notify({
+        group: 'notifications',
+        type: 'success',
+        title: 'Important message',
+        text: "You have successfully logged in!",
+      });
+    })
+    .catch((error)=>{
+      this.$notify({
+        group: 'notifications',
+        type: 'error',
+        title: 'Important message',
+        text: error,
+      })
+    });
   }
 }
 </script>

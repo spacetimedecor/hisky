@@ -57,12 +57,6 @@
         .then((response)=>{
           if (response.data.login !== null){
             localStorage.setItem(AUTH_TOKEN, response.data.login.token);
-            this.$notify({
-              group: 'notifications',
-              type: 'success',
-              title: 'Important message',
-              text: "You have successfully logged in!",
-            });
             this.$router.push('user').catch(()=>{});
           } else {
             throw "Sorry... Invalid credentials... :/"

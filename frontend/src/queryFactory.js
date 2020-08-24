@@ -3,6 +3,19 @@ import gql from 'graphql-tag'
 export default (queryType) => {
 
     switch(queryType){
+        case "me":
+            return gql`query{
+                me {
+                    username,
+                    email,
+                    firstName,
+                    lastName,
+                    lastLogin,
+                    dateJoined,
+                    isStaff,
+                    isSuperuser
+                }
+            }`
         case "login":
             return gql`mutation(
                 $username: String!,
