@@ -45,7 +45,7 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+
       },
       saveUserData (id, token) {
 

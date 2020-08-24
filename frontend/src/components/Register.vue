@@ -104,15 +104,32 @@ export default {
         this.$apollo.mutate({
           mutation: queryFactory("register"),
           variables: {
-            email: this.form.email,
-            password: this.form.password,
-            username: this.form.username,
             firstname: this.form.firstname,
             lastname: this.form.lastname,
+            username: this.form.username,
+            email: this.form.email,
+            password: this.form.password1,
           }
         })
         .then((response)=>{
-          console.log(response)
+          console.log(response);
+          if (response.data.register.message === "Thanks for signing up!"){
+            this.$notify({
+              group: 'notifications',
+              type: 'success',
+              title: 'Important message',
+              text: 'Registration successful!',
+            });
+            this.$router.push('login')
+          }
+        })
+        .catch(()=>{
+          this.$notify({
+            group: 'notifications',
+            type: 'error',
+            title: 'Important message',
+            text: 'Registration error (an account with these details probably exists)',
+          })
         });
       } else {
         this.$notify({

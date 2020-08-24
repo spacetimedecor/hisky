@@ -13,19 +13,19 @@ export default (queryType) => {
         //     `
         case "register":
             return gql`mutation (
+                $firstname: String,
+                $lastname: String,
+                $username: String!,
                 $email: String!,
                 $password: String!,
-                $username: String!,
-                $firstname: String,
-                $lastname: String
             )
             {
                 register(
-                    email: $email,
-                    password: $password,
-                    username: $username,
                     firstname: $firstname,
                     lastname: $lastname
+                    username: $username,
+                    email: $email,
+                    password: $password,
                 ){
                     message
                 }
