@@ -6,10 +6,10 @@ schema {
 }
 
 type Mutation {
+    "Obtain JSON Web Token mutation"
+    login(password: String!, username: String!): ObtainJSONWebToken
     refreshToken(token: String): Refresh
     register(email: String!, firstname: String, lastname: String, password: String!, username: String!): Register
-    "Obtain JSON Web Token mutation"
-    tokenAuth(password: String!, username: String!): ObtainJSONWebToken
     verifyToken(token: String): Verify
 }
 

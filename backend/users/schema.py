@@ -36,33 +36,9 @@ class Register(graphene.Mutation):
             return Register(message="Something went wrong :/")
 
 
-class Login(graphene.Mutation):
-    token = graphene.String()
-    id = graphene.String()
-    message = graphene.String()
-
-    class Arguments:
-        username = graphene.String(required=True)
-        password = graphene.String(required=True)
-
-    def mutate(self, info, username, password):
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            return Login(
-                message="Successfully logged in!",
-                token=graphql_jwt.ObtainJSONWebToken.Field(),
-                id=user.id
-            )
-        else:
-            return Login(
-                message="Sorry, no user has been found with this username and password."
-            )
-
-
-
 class Mutation(graphene.ObjectType):
     register = Register.Field()
-    login = Login.Field()
+    login = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 

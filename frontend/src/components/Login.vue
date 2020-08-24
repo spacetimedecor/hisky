@@ -53,6 +53,21 @@
             password: this.form.password,
           }
         })
+        .then((response)=>{
+          if (response.data.login !== null){
+            localStorage.setItem(AUTH_TOKEN, response.data.login.token)
+          } else {
+            throw "Sorry... Invalid credentials... :/"
+          }
+        })
+        .catch((e)=>{
+          this.$notify({
+            group: 'notifications',
+            type: 'error',
+            title: 'Important message',
+            text: e,
+          })
+        });
       },
       saveUserData (id, token) {
 
