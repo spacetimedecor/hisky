@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notifications group="notifications" position="bottom"/>
     <Header/>
       <b-container fluid class="h-100">
       <router-view/>

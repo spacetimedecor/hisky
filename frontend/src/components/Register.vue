@@ -32,26 +32,26 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group inline
+        <b-form-group
             id="input-group-2"
             label="Your first name:"
             label-for="input-2"
         >
           <b-form-input
               id="input-2"
-              v-model="form.firstName"
+              v-model="form.firstname"
               placeholder="Enter name"
           ></b-form-input>
         </b-form-group>
 
         <b-form-group
             id="input-group-3"
-            label="Your second name:"
+            label="Your last name:"
             label-for="input-3"
         >
           <b-form-input
               id="input-3"
-              v-model="form.secondName"
+              v-model="form.lastname"
               placeholder="Enter name"
           ></b-form-input>
         </b-form-group>
@@ -90,12 +90,43 @@
 </template>
 
 <script>
+
+import queryFactory from "@/queryFactory";
+
+
+
 export default {
   name: "Register",
   methods: {
-    onSubmit(evt) {
+    onSubmit: function (evt) {
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
+      if (this.passwordsAreSame) {
+        this.$apollo.mutate({
+          mutation: queryFactory("register"),
+          variables: {
+            email: this.form.email,
+            password: this.form.password,
+            username: this.form.username,
+            firstname: this.form.firstname,
+            lastname: this.form.lastname,
+          }
+        })
+        .then((response)=>{
+          console.log(response)
+        });
+      } else {
+        this.$notify({
+          group: 'notifications',
+          type: 'error',
+          title: 'Important message',
+          text: 'Your passwords don\'t match!',
+        })
+      }
+    }
+  },
+  computed: {
+    passwordsAreSame: function(){
+      return this.form.password1 === this.form.password2
     }
   },
   data() {
@@ -103,8 +134,8 @@ export default {
       form: {
         email: '',
         username: '',
-        firstName: '',
-        secondName: '',
+        firstname: '',
+        lastname: '',
         password1: '',
         password2: ''
       }
