@@ -4,12 +4,15 @@ import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import Register from './components/Register'
 import User from './components/User'
+import {AUTH_TOKEN} from "@/settings";
 
-export default new Router({
 
+export const router = new Router({
   routes: [
+
+    { path: '/', redirect: '/user' },
     {
-      path: '/',
+      path: '/dashboard',
       component: Dashboard
     },
     {
@@ -28,3 +31,27 @@ export default new Router({
 
   mode: 'history'
 })
+
+router.beforeEach((to, from, next)=>{
+  let isAuthenticated;
+  if(localStorage.getItem(AUTH_TOKEN))
+    isAuthenticated = true;
+  else
+    isAuthenticated= false;
+
+  console.log("is authenticated", isAuthenticated)
+  console.log("to.path", to.path)
+
+  if ((to.path === '/user' || to.path === '/dashboard') && !isAuthenticated){
+    next('/login')
+  }
+
+  if ((to.path === '/login' || to.path === '/register') && isAuthenticated){
+    next('/user')
+  }
+
+  next()
+})
+
+
+

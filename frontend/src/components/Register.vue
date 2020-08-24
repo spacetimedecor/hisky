@@ -84,6 +84,7 @@
           ></b-form-input>
         </b-form-group>
         <b-button type="submit" variant="success">Submit</b-button>
+        <b-button to="/login" variant="warning">Login</b-button>
       </b-form>
     </b-col>
   </b-row>
@@ -95,6 +96,7 @@ import queryFactory from "@/queryFactory";
 export default {
   name: "Register",
   methods: {
+
     onSubmit: function (evt) {
       evt.preventDefault()
       if (this.passwordsAreSame) {
@@ -117,7 +119,7 @@ export default {
               title: 'Important message',
               text: 'Registration successful!',
             });
-            this.$router.push('login')
+            this.$router.push('login').catch(()=>{});
           }
         })
         .catch(()=>{

@@ -24,7 +24,7 @@
         >
           <b-form-input
               id="input-4"
-              v-model="form.password1"
+              v-model="form.password"
               type="password"
               required
               placeholder="Enter password"
@@ -32,6 +32,7 @@
         </b-form-group>
 
         <b-button type="submit" variant="success">Submit</b-button>
+        <b-button to="/register" variant="warning">Register</b-button>
       </b-form>
     </b-col>
   </b-row>
@@ -39,7 +40,7 @@
 
 <script>
   import queryFactory from "@/queryFactory";
-  import { USER_ID, AUTH_TOKEN } from '@/settings'
+  import { AUTH_TOKEN } from '@/settings'
 
   export default {
     name: 'Login',
@@ -55,7 +56,14 @@
         })
         .then((response)=>{
           if (response.data.login !== null){
-            localStorage.setItem(AUTH_TOKEN, response.data.login.token)
+            localStorage.setItem(AUTH_TOKEN, response.data.login.token);
+            this.$notify({
+              group: 'notifications',
+              type: 'success',
+              title: 'Important message',
+              text: "You have successfully logged in!",
+            });
+            this.$router.push('user').catch(()=>{});
           } else {
             throw "Sorry... Invalid credentials... :/"
           }
@@ -69,12 +77,15 @@
           })
         });
       },
-      saveUserData (id, token) {
-
-        localStorage.setItem(USER_ID, id)
-        localStorage.setItem(AUTH_TOKEN, token)
-        this.$root.$data.userId = localStorage.getItem(USER_ID)
-      }
+      // getUserProfile() {
+      //
+      // },
+      // saveUserData (id, token) {
+      //
+      //   localStorage.setItem(USER_ID, id)
+      //   localStorage.setItem(AUTH_TOKEN, token)
+      //   this.$root.$data.userId = localStorage.getItem(USER_ID)
+      // }
     },
     data() {
       return {
@@ -86,3 +97,4 @@
     }
   }
 </script>
+

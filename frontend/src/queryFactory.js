@@ -13,7 +13,6 @@ export default (queryType) => {
                     username: $username, 
                     password: $password
                 ){
-                    id,
                     token
                 }
             }`
