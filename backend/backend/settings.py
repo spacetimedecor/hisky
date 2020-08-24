@@ -30,9 +30,9 @@ ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
-    '127.0.0.1',
-    'localhost',
-    '0.0.0.0'
+    'https://127.0.0.1:5000',
+    'https://localhost:5000',
+    'https://0.0.0.0:5000'
 )
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'graphene_django',
     'users'
 ]
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 GRAPHENE = {

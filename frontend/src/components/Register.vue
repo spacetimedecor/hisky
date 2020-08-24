@@ -90,10 +90,7 @@
 </template>
 
 <script>
-
 import queryFactory from "@/queryFactory";
-
-
 
 export default {
   name: "Register",

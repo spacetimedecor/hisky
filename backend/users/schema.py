@@ -1,7 +1,6 @@
 import graphene
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from graphene_django import DjangoObjectType
-# from users.models import UserModel
 import graphql_jwt
 
 
@@ -11,7 +10,6 @@ class UserType(DjangoObjectType):
 
 
 class Register(graphene.Mutation):
-
     message = graphene.String()
 
     class Arguments:
@@ -21,8 +19,7 @@ class Register(graphene.Mutation):
         email = graphene.String(required=True)
         password = graphene.String(required=True)
 
-    @classmethod
-    def mutate(cls, info, firstname, lastname, username, password, email):
+    def mutate(self, info, firstname, lastname, username, password, email):
 
         try:
             user = get_user_model()(
@@ -39,9 +36,33 @@ class Register(graphene.Mutation):
             return Register(message="Something went wrong :/")
 
 
+class Login(graphene.Mutation):
+    token = graphene.String()
+    id = graphene.String()
+    message = graphene.String()
+
+    class Arguments:
+        username = graphene.String(required=True)
+        password = graphene.String(required=True)
+
+    def mutate(self, info, username, password):
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            return Login(
+                message="Successfully logged in!",
+                token=graphql_jwt.ObtainJSONWebToken.Field(),
+                id=user.id
+            )
+        else:
+            return Login(
+                message="Sorry, no user has been found with this username and password."
+            )
+
+
+
 class Mutation(graphene.ObjectType):
     register = Register.Field()
-    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    login = Login.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 

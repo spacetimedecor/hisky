@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import queryFactory from "@/queryFactory";
   import { USER_ID, AUTH_TOKEN } from '@/settings'
 
   export default {
@@ -45,7 +46,13 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-
+        this.$apollo.mutate({
+          mutation: queryFactory("login"),
+          variables: {
+            username: this.form.username,
+            password: this.form.password,
+          }
+        })
       },
       saveUserData (id, token) {
 
